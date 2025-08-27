@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>سلة المشتريات</h1>
+
+{% if items %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>المنتج</th>
+      <th>السعر</th>
+      <th>الكمية</th>
+      <th>الإجمالي</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for it in items %}
+    <tr>
+      <td>{{ it.product['name'] }}</td>
+      <td>{{ price_fmt(it.product['price_cents']) }} $</td>
+      <td>{{ it.qty }}</td>
+      <td>{{ price_fmt(it.subtotal) }} $</td>
+      <td>
+        <form method="post" action="{{ url_for('cart_remove', pid=it.product['id']) }}">
+          <button type="submit">إزالة</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="total">الإجمالي: <strong>{{ price_fmt(total) }} $</strong></div>
+<a class="button" href="{{ url_for('checkout') }}">إتمام الشراء</a>
+{% else %}
+السلة فارغة حالياً.
+{% endif %}
+{% endblock %}

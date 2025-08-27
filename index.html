@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>المنتجات</h1>
+
+<form method="get" class="search">
+  <input type="text" name="q" placeholder="ابحث عن منتج..." value="{{ q or '' }}">
+  <button type="submit">بحث</button>
+</form>
+
+<div class="grid">
+  {% for p in products %}
+  <a class="card" href="{{ url_for('product_detail', pid=p['id']) }}">
+    <img src="{{ url_for('static', filename='uploads/' ~ (p['image'] or 'placeholder.png')) }}" alt="{{ p['name'] }}">
+    <div class="card-body">
+      <h3>{{ p['name'] }}</h3>
+      <div class="price">{{ price_fmt(p['price_cents']) }} $</div>
+    </div>
+  </a>
+  {% else %}
+  لا توجد منتجات حالياً.
+  {% endfor %}
+</div>
+{% endblock %}

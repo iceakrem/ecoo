@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>إتمام الشراء</h1>
+
+{% if items %}
+<form method="post" class="form">
+  <label>الاسم الكامل</label>
+  <input type="text" name="name" required>
+
+  <label>البريد الإلكتروني</label>
+  <input type="email" name="email" required>
+
+  <label>العنوان</label>
+  <textarea name="address" required></textarea>
+
+  <div class="total">الإجمالي: <strong>{{ price_fmt(total) }} $</strong></div>
+
+  <button type="submit">تأكيد الطلب</button>
+</form>
+{% else %}
+لا توجد عناصر في السلة.
+{% endif %}
+{% endblock %}

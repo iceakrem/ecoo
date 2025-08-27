@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="product">
+  <img class="product-img" src="{{ url_for('static', filename='uploads/' ~ (p['image'] or 'placeholder.png')) }}" alt="{{ p['name'] }}">
+  <div class="product-info">
+    <h1>{{ p['name'] }}</h1>
+    <div class="price">{{ price_fmt(p['price_cents']) }} $</div>
+    <p>{{ p['description'] }}</p>
+    <form method="post" action="{{ url_for('cart_add', pid=p['id']) }}">
+      <label>الكمية</label>
+      <input type="number" name="qty" value="1" min="1">
+      <button type="submit">أضف إلى السلة</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title or "متجر بسيط ببايثون" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <header class="container">
+      <a href="{{ url_for('index') }}" class="brand">متجر بسيط</a>
+      <nav>
+        <a href="{{ url_for('index') }}">المنتجات</a>
+        <a href="{{ url_for('cart_view') }}">السلة</a>
+        <a href="{{ url_for('admin_login') }}">الإدارة</a>
+      </nav>
+    </header>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash container">
+          {% for m in messages %}<div class="flash-item">{{ m }}</div>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="container muted">
+      صنع بـ Flask + SQLite — هذا مشروع تعليمي
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>المنتجات (إدارة)</h1>
+
+<h3>إضافة منتج</h3>
+<form method="post" action="{{ url_for('admin_products_add') }}" enctype="multipart/form-data" class="form">
+  <label>الاسم</label>
+  <input type="text" name="name" required>
+
+  <label>السعر (بالدولار)</label>
+  <input type="number" name="price" step="0.01" min="0" value="0" required>
+
+  <label>الوصف</label>
+  <textarea name="description"></textarea>
+
+  <label>الصورة</label>
+  <input type="file" name="image" accept="image/*">
+
+  <button type="submit">إضافة</button>
+</form>
+
+<h3>قائمة المنتجات</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>صورة</th>
+      <th>الاسم</th>
+      <th>السعر</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+    <tr>
+      <td>{{ p['id'] }}</td>
+      <td><img class="thumb" src="{{ url_for('static', filename='uploads/' ~ (p['image'] or 'placeholder.png')) }}" alt="{{ p['name'] }}"></td>
+      <td>{{ p['name'] }}</td>
+      <td>{{ price_fmt(p['price_cents']) }} $</td>
+      <td>
+        <form method="post" action="{{ url_for('admin_products_delete', pid=p['id']) }}" onsubmit="return confirm('حذف المنتج؟');">
+          <button type="submit">حذف</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
